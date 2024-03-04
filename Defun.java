@@ -1,3 +1,3 @@
-public class Defun {
+public class Defun<T> implements StackInterface<T> {
     
 }

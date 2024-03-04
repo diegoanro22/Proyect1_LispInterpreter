@@ -1,3 +1,3 @@
-public class List {
+public class List<T> implements StackInterface<T> {
     
 }

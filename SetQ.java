@@ -1,3 +1,3 @@
-public class SetQ {
-    
+public class SetQ<T> implements StackInterface<T> {
+
 }

@@ -1,8 +1,9 @@
 import java.util.Stack;
 
-public class Expression {
+public class Expression<T> {
 
-    Stack<String> stack = new Stack<>();    
+    Stack<String> stack = new Stack<>();  
+    StackFactory stackFactory = new StackFactory();  
 
     
     public boolean checkParen(String exp) {
@@ -32,6 +33,16 @@ public class Expression {
             throw new IllegalArgumentException("Error de paréntesis, no se cerró signo");
         }else{
             return true;
+        }
+    }
+
+    public void checkExpression(String exp) {
+        String[] expStr = {"setQ", "defun", "list", "equal", "quote", "atom"};
+    
+        for (String reservedWord : expStr) {
+            if (exp.indexOf(reservedWord + " ", 1) == 1) {
+                StackInterface<T> stackInterface = stackFactory.createStack(reservedWord);
+            }
         }
     }
 }

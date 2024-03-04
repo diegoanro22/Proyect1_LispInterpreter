@@ -1,3 +1,3 @@
-public class Atom {
+public class Atom<T> implements StackInterface<T> {
     
 }

@@ -1,3 +1,3 @@
-public class Quote {
+public class Quote<T> implements StackInterface<T> {
     
 }
