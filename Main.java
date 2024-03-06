@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Main{
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        Expression validate = new Expression();
+        Expression<String> validate = new Expression<>();
 
         String expression = "";
 

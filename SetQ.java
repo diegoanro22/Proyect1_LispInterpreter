@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class SetQ<T> implements StackInterface<T> {
+public class SetQ<T> implements InterfaceFactory<T> {
     private Map<String, T> variableValues;
     private Scanner scanner;
 
@@ -39,5 +39,11 @@ public class SetQ<T> implements StackInterface<T> {
         } else {
             System.out.println("Variable '" + variable + "' no encontrada.");
         }
+    }
+
+    @Override
+    public void execute(String exp) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'execute'");
     }
 }

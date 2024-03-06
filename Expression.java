@@ -3,7 +3,7 @@ import java.util.Stack;
 public class Expression<T> {
 
     Stack<String> stack = new Stack<>();  
-    StackFactory stackFactory = new StackFactory();  
+    Factory<T> stackFactory = new Factory<>();  
 
     
     public boolean checkParen(String exp) {
@@ -39,10 +39,10 @@ public class Expression<T> {
     public void checkExpression(String exp) {
         String[] expStr = {"setQ", "defun", "list", "equal", "quote", "atom"};
     
-        System.out.println("s");
         for (String reservedWord : expStr) {
             if (exp.indexOf(reservedWord + " ", 1) == 1) {
-                StackInterface<T> stackInterface = stackFactory.createStack(reservedWord);
+                InterfaceFactory<T> stackInterface = stackFactory.createStack(reservedWord);
+                stackInterface.execute(exp);
             }
         }
     }

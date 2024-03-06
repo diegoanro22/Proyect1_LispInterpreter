@@ -1,6 +1,6 @@
-public class StackFactory<T> {
+public class Factory<T> {
 
-    public StackInterface<T> createStack(String reservedWord) {
+    public InterfaceFactory<T> createStack(String reservedWord) {
         switch (reservedWord) {
             case "setQ":
                 return new SetQ<T>();
