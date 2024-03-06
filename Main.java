@@ -12,6 +12,7 @@ public class Main{
             expression = input.nextLine();
             try{
                 validate.checkParen(expression);
+                validate.checkExpression(expression);
                 
             } catch (Exception e){
                 System.out.println(e.getMessage());

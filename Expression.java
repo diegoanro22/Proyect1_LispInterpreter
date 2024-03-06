@@ -39,6 +39,7 @@ public class Expression<T> {
     public void checkExpression(String exp) {
         String[] expStr = {"setQ", "defun", "list", "equal", "quote", "atom"};
     
+        System.out.println("s");
         for (String reservedWord : expStr) {
             if (exp.indexOf(reservedWord + " ", 1) == 1) {
                 StackInterface<T> stackInterface = stackFactory.createStack(reservedWord);
