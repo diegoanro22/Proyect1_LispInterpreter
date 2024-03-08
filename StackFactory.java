@@ -1,19 +1,23 @@
-public class StackFactory<T> {
+import java.util.Map;
 
-    public StackInterface<T> createStack(String reservedWord) {
+public class Factory<T> {
+
+    public InterfaceFactory<T> createStack(String reservedWord, Map<String, T> variableValues) {
         switch (reservedWord) {
-            case "setQ":
-                return new SetQ<T>();
+            case "setq":
+                return new SetQ<>(variableValues);
             case "defun":
-                return new Defun<T>();
+                return new Defun<>();
             case "list":
-                return new List<T>();
+                return new List<>();
             case "equal":
-                return new Equal<T>();
+                return new Equal<>();
             case "quote":
-                return new Quote<T>();
+                return new Quote<>();
             case "atom":
-                return new Atom<T>();
+                return new Atom<>();
+            case "princ":
+                return new Princ<>(variableValues);
             default:
                 throw new IllegalArgumentException("Palabra reservada no válida: " + reservedWord);
         }
