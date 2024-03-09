@@ -1,17 +1,15 @@
-import java.util.HashMap;
-import java.util.Map;
 
 public class Princ<T> implements InterfaceFactory<T> {
 
-    private SetQ setq ;
+    private final SetQ<T> setQInstance;
 
-    public Princ() {
-        this.setq = SetQ.getInstance(); // Obtener la instancia única
+    public Princ(SetQ<T> setQInstance) {
+        this.setQInstance = setQInstance;
     }
+
 
     @Override
     public void execute(String exp) {
-        Map<String,T> variableValues = setq.variableValues;
         Expression<T> expressionChecker = new Expression<>();
         try {
             if (expressionChecker.checkParen(exp)) {
@@ -23,7 +21,7 @@ public class Princ<T> implements InterfaceFactory<T> {
 
                 String variable = parts[1];
 
-                T value = variableValues.get(variable);
+                T value = setQInstance.variableValues.get(variable);
                 if (value != null) {
                     System.out.println(value);
                 } else {

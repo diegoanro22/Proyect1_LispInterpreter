@@ -3,19 +3,8 @@ import java.util.Map;
 
 public class SetQ<T> implements InterfaceFactory<T> {
 
-    private static SetQ<?> instance; 
     public final Map<String, T> variableValues = new HashMap<>();
 
-    private SetQ() {
-
-    }
-
-    public static synchronized SetQ<?> getInstance() {
-        if (instance == null) {
-            instance = new SetQ<>();
-        }
-        return instance;
-    }
 
     @Override
     public void execute(String exp) {
@@ -29,6 +18,7 @@ public class SetQ<T> implements InterfaceFactory<T> {
                 }
 
                 String variable = parts[1];
+                @SuppressWarnings("unchecked")
                 T value = (T) parts[2];
 
                 setq(variable, value);
