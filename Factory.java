@@ -2,10 +2,10 @@ import java.util.Map;
 
 public class Factory<T> {
 
-    public InterfaceFactory<T> createStack(String reservedWord, Map<String, T> variableValues) {
+    public InterfaceFactory<T> createStack(String reservedWord) {
         switch (reservedWord) {
             case "setq":
-                return new SetQ<>(variableValues);
+                return SetQ.getInstance();
             case "defun":
                 return new Defun<>();
             case "list":
@@ -14,10 +14,10 @@ public class Factory<T> {
                 return new Equal<>();
             case "quote":
                 return new Quote<>();
-            case "atom":
+                case "atom":
                 return new Atom<>();
             case "princ":
-                return new Princ<>(variableValues);
+                return new Princ<>();
             default:
                 throw new IllegalArgumentException("Palabra reservada no válida: " + reservedWord);
         }

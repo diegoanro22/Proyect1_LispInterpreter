@@ -1,11 +1,20 @@
+import java.util.HashMap;
 import java.util.Map;
 
 public class SetQ<T> implements InterfaceFactory<T> {
 
-    private final Map<String, T> variableValues;
+    private static SetQ<?> instance; 
+    public final Map<String, T> variableValues = new HashMap<>();
 
-    public SetQ(Map<String, T> variableValues) {
-        this.variableValues = variableValues;
+    private SetQ() {
+
+    }
+
+    public static synchronized SetQ<?> getInstance() {
+        if (instance == null) {
+            instance = new SetQ<>();
+        }
+        return instance;
     }
 
     @Override
@@ -18,10 +27,10 @@ public class SetQ<T> implements InterfaceFactory<T> {
                     System.out.println("Faltan argumentos para 'setq'");
                     return;
                 }
-                
+
                 String variable = parts[1];
                 T value = (T) parts[2];
-                
+
                 setq(variable, value);
             }
         } catch (IllegalArgumentException e) {
