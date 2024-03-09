@@ -11,6 +11,8 @@ public class SetQ<T> implements InterfaceFactory<T> {
         Expression<T> expressionChecker = new Expression<>();
         try {
             if (expressionChecker.checkParen(exp)) {
+                exp = exp.substring(0, exp.length() - 1);
+
                 String[] parts = exp.split(" ");
                 if (parts.length < 3) {
                     System.out.println("Faltan argumentos para 'setq'");
