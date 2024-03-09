@@ -5,7 +5,7 @@ public class Factory<T> {
     public InterfaceFactory<T> createStack(String reservedWord) {
         switch (reservedWord) {
             case "setq":
-                return SetQ.getInstance();
+                /*return SetQ.getInstance();*/
             case "defun":
                 return new Defun<>();
             case "list":

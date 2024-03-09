@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.Map;
 
 public class Atom<T> implements InterfaceFactory<T> {
 
@@ -20,7 +19,8 @@ public class Atom<T> implements InterfaceFactory<T> {
     }
 
     private boolean isAtom(String expression) {
-        return !expression.contains(" ") && !expression.contains("(") && !expression.contains(")");
-    }
-
+        boolean isString = expression.matches("\".*\"");
+        boolean isInteger = expression.matches("-?\\d+");
+        return isString || isInteger;
+    }   
 }
