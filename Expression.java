@@ -5,6 +5,10 @@ public class Expression<T> {
     Stack<String> stack = new Stack<>();
     Factory<T> stackFactory = new Factory<>();
 
+    /**Metodo para verificar que se inicie y finalize con parentecis la expresion
+     * @param exp
+     * @return
+     */
     public boolean checkParen(String exp) {
         stack.clear();
         String[] expStr = exp.split("");
@@ -35,16 +39,25 @@ public class Expression<T> {
         }
     }
 
+    /**Metodo para identificar palabras reservadas, numeros y signos
+     * @param exp
+     */
     public void checkExpression(String exp) {
-        String[] expStr = {"setq", "defun", "list", "equal", "quote", "atom", "princ"};
-
-        for (String reservedWord : expStr) {
-            if (exp.indexOf(reservedWord + " ", 1) == 1) {
-                InterfaceFactory<T> stackInterface = stackFactory.createStack(reservedWord);
-                stackInterface.execute(exp);
-                return;
+        exp = exp.substring(1, exp.length() - 1); 
+        if (exp.matches(".*\\d+.*[+\\-*/].*")) {
+            Operation operation = new Operation();
+            double result = operation.evaluatePostfixExpression(exp);
+            System.out.println("El resultado de la expresión es: " + result);
+        } else {
+            String[] expStr = {"setq", "defun", "list", "equal", "quote", "atom", "princ"};
+            for (String reservedWord : expStr) {
+                if (exp.indexOf(reservedWord + " ", 1) == 1) {
+                    InterfaceFactory<T> stackInterface = stackFactory.createStack(reservedWord);
+                    stackInterface.execute(exp);
+                    return;
+                }
             }
+            System.out.println("Comando no reconocido.");
         }
-        System.out.println("Comando no reconocido.");
-    } 
+    }
 }

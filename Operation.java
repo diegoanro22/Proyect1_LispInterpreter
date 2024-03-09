@@ -1,6 +1,6 @@
 //Clase para operaciones aritmeticas
-
 import java.util.Stack;
+
 
 public class Operation {
     
@@ -25,6 +25,9 @@ public class Operation {
         
         return stack.pop();
     }
+
+    
+    
 
     /**Metodo para verificar la existencia de algun signo de operacion
      * @param exp
