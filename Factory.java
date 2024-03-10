@@ -24,6 +24,8 @@ public class Factory<T> {
                 return new Princ<>(setQInstance);
             case "operation":
                 return new Operation<>();
+            case "comparator":
+                return new Comparator<>();
             default:
                 throw new IllegalArgumentException("Palabra reservada no válida: " + reservedWord);
         }

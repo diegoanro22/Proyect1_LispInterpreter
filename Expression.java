@@ -67,7 +67,7 @@ public class Expression<T> {
         // }
     
         // Si no se encontró un operador, buscar palabras reservadas
-        String[] expStr = {"setq", "defun", "list", "equal", "quote", "atom", "princ"};
+        String[] expStr = {"setq", "defun", "list", "equal", "quote", "atom", "princ", "comparator"};
         for (String reservedWord : expStr) {
             if (exp.indexOf(reservedWord + " ", 1) == 1) {
                 InterfaceFactory<T> stackInterface = stackFactory.createStack(reservedWord);
