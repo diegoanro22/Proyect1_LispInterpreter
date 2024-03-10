@@ -36,12 +36,12 @@ public class Expression<T> {
         }
     }
 
-    public void checkExpression(String exp, Map<String, T> variableValues) {
+    public void checkExpression(String exp) {
         String[] expStr = {"setq", "defun", "list", "equal", "quote", "atom", "princ"};
 
         for (String reservedWord : expStr) {
             if (exp.indexOf(reservedWord + " ", 1) == 1) {
-                InterfaceFactory<T> stackInterface = stackFactory.createStack(reservedWord, variableValues);
+                InterfaceFactory<T> stackInterface = stackFactory.createStack(reservedWord);
                 stackInterface.execute(exp);
                 return;
             }

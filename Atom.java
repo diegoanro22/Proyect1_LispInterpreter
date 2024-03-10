@@ -1,17 +1,10 @@
 import java.util.Scanner;
-import java.util.Map;
 
 public class Atom<T> implements InterfaceFactory<T> {
 
-    private Factory<T> factory = new Factory<>();
     private static Scanner scanner = new Scanner(System.in);
     private T value;
-
-    public Atom(Map<String, T> variableValues) {
-        this.value = value;
-    }
-
-
+    
     @Override
     public void execute(String exp) {
         String expression = exp.trim();
@@ -26,7 +19,8 @@ public class Atom<T> implements InterfaceFactory<T> {
     }
 
     private boolean isAtom(String expression) {
-        return !expression.contains(" ") && !expression.contains("(") && !expression.contains(")");
-    }
-
+        boolean isString = expression.matches("\".*\"");
+        boolean isInteger = expression.matches("-?\\d+");
+        return isString || isInteger;
+    }   
 }

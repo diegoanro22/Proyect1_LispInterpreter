@@ -1,12 +1,10 @@
 import java.util.Scanner;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         Expression<String> validate = new Expression<>();
-        Map<String, String> variableValues = new HashMap<>();
+        
 
         String expression = "";
 
@@ -15,7 +13,7 @@ public class Main {
             expression = input.nextLine();
             try {
                 validate.checkParen(expression);
-                validate.checkExpression(expression, variableValues);
+                validate.checkExpression(expression);
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
