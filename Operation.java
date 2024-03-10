@@ -2,8 +2,16 @@
 import java.util.Stack;
 
 
-public class Operation {
+public class Operation<T> implements InterfaceFactory<T> {
     
+    
+    // Método execute que recibe una expresión como argumento
+    @Override
+    public void execute(String exp) {
+        double resultado = evaluatePostfixExpression(exp);
+        System.out.println("El resultado de la expresión en Operation es: " + resultado);
+    }
+
     /**Metodo para evaluar la expresion postfix y pasar la cadena ingresada a dato de tipo double
      * @param exp
      * @return
@@ -24,6 +32,7 @@ public class Operation {
         }
         
         return stack.pop();
+        
     }
 
     

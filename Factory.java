@@ -6,8 +6,8 @@ public class Factory<T> {
         this.setQInstance = new SetQ<>();
     }
 
-    public InterfaceFactory<T> createStack(String reservedWord) {
-        switch (reservedWord) {
+    public InterfaceFactory<T> createStack(String reservedWord, String oper) {
+        switch (reservedWord ) {
             case "setq":
                 return setQInstance;
             case "defun":
@@ -23,7 +23,11 @@ public class Factory<T> {
             case "princ":
                 return new Princ<>(setQInstance);
             default:
-                throw new IllegalArgumentException("Palabra reservada no válida: " + reservedWord);
+                if (oper.matches("[+\\-*/]")) {
+                    return new Operation<>();
+                } else {
+                    throw new IllegalArgumentException("Palabra reservada no válida: " + reservedWord);
+                }
         }
     }
 }
