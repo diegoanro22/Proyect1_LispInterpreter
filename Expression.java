@@ -43,34 +43,34 @@ public class Expression<T> {
      * @param exp
      */
     public void checkExpression(String exp) {
-        exp = exp.substring(1, exp.length() - 1); 
-        String[] sign = {"+", "-", "*", "/"};
-        boolean containsOperator = false; 
+        // exp = exp.substring(1, exp.length() - 1); 
+        // String[] sign = {"+", "-", "*", "/"};
+        // boolean containsOperator = false; 
     
-        // Verificar si la expresión contiene algún operador
-        for (String oper : sign) {
-            if (exp.contains(oper)) {
-                containsOperator = true;
-                break;
-            }
-        }
+        // // Verificar si la expresión contiene algún operador
+        // for (String oper : sign) {
+        //     if (exp.contains(oper)) {
+        //         containsOperator = true;
+        //         break;
+        //     }
+        // }
     
-        // Si se encontró un operador, enviar la expresión al factory
-        if (containsOperator) {
-            for (String oper : sign) {
-                if (exp.contains(oper)) {
-                    InterfaceFactory<T> stackInterface = stackFactory.createStack("", oper);
-                    stackInterface.execute(exp);
-                    return;
-                }
-            }
-        }
+        // // Si se encontró un operador, enviar la expresión al factory
+        // if (containsOperator) {
+        //     for (String oper : sign) {
+        //         if (exp.contains(oper)) {
+        //             InterfaceFactory<T> stackInterface = stackFactory.createStack("operation");
+        //             stackInterface.execute(exp);
+        //             return;
+        //         }
+        //     }
+        // }
     
         // Si no se encontró un operador, buscar palabras reservadas
         String[] expStr = {"setq", "defun", "list", "equal", "quote", "atom", "princ"};
         for (String reservedWord : expStr) {
             if (exp.indexOf(reservedWord + " ", 1) == 1) {
-                InterfaceFactory<T> stackInterface = stackFactory.createStack(reservedWord, "");
+                InterfaceFactory<T> stackInterface = stackFactory.createStack(reservedWord);
                 stackInterface.execute(exp);
                 return;
             }
