@@ -34,3 +34,4 @@ public class SetQ<T> implements InterfaceFactory<T> {
         variableValues.put(variable, value);
     }
 }
+
