@@ -43,30 +43,25 @@ public class Expression<T> {
      * @param exp
      */
     public void checkExpression(String exp) {
-        // exp = exp.substring(1, exp.length() - 1); 
-        // String[] sign = {"+", "-", "*", "/"};
-        // boolean containsOperator = false; 
+        String[] sign = {"+", "-", "*", "/"};
+        boolean containsOperator = false; 
     
-        // // Verificar si la expresión contiene algún operador
-        // for (String oper : sign) {
-        //     if (exp.contains(oper)) {
-        //         containsOperator = true;
-        //         break;
-        //     }
-        // }
+        // Verificar si la expresión contiene algún operador
+        for (String oper : sign) {
+            if (exp.contains(oper)) {
+                containsOperator = true;
+                break;
+            }
+        }
     
-        // // Si se encontró un operador, enviar la expresión al factory
-        // if (containsOperator) {
-        //     for (String oper : sign) {
-        //         if (exp.contains(oper)) {
-        //             InterfaceFactory<T> stackInterface = stackFactory.createStack("operation");
-        //             stackInterface.execute(exp);
-        //             return;
-        //         }
-        //     }
-        // }
+        // Si se encontró un operador, enviar la expresión al factory
+        if (containsOperator) {
+            InterfaceFactory<T> stackInterface = stackFactory.createStack("operation");
+            stackInterface.execute(exp);
+            return;
+        }
     
-        // Si no se encontró un operador, buscar palabras reservadas
+        // Si no se encontró un operador, verificar palabras reservadas
         String[] expStr = {"setq", "defun", "list", "equal", "quote", "atom", "princ", "comparator"};
         for (String reservedWord : expStr) {
             if (exp.indexOf(reservedWord + " ", 1) == 1) {
@@ -78,6 +73,7 @@ public class Expression<T> {
     
         System.out.println("Comando no reconocido.");
     }
-}
+}    
+
     
 
