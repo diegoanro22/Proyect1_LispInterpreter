@@ -1,11 +1,15 @@
-import java.util.Map;
 
 public class Factory<T> {
+    private final SetQ<T> setQInstance;
+
+    public Factory(){
+        this.setQInstance = new SetQ<>();
+    }
 
     public InterfaceFactory<T> createStack(String reservedWord) {
-        switch (reservedWord) {
+        switch (reservedWord ) {
             case "setq":
-                /*return SetQ.getInstance();*/
+                return setQInstance;
             case "defun":
                 return new Defun<>();
             case "list":
@@ -15,9 +19,13 @@ public class Factory<T> {
             case "quote":
                 return new Quote<>();
                 case "atom":
-                return new Atom<>();
+                return new Atom<>(setQInstance);
             case "princ":
-                return new Princ<>();
+                return new Princ<>(setQInstance);
+            case "operation":
+                return new Operation<>();
+            case "comparator":
+                return new Comparator<>();
             default:
                 throw new IllegalArgumentException("Palabra reservada no válida: " + reservedWord);
         }

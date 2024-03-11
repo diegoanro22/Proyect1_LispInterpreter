@@ -1,27 +1,28 @@
+import java.util.HashMap;
 import java.util.Map;
 
-public class SetQ<T> implements StackFactory<T> {
+public class SetQ<T> implements InterfaceFactory<T> {
 
-    private final Map<String, T> variableValues;
+    public final Map<String, T> variableValues = new HashMap<>();
 
-    public SetQ(Map<String, T> variableValues) {
-        this.variableValues = variableValues;
-    }
 
     @Override
     public void execute(String exp) {
         Expression<T> expressionChecker = new Expression<>();
         try {
             if (expressionChecker.checkParen(exp)) {
+                exp = exp.substring(0, exp.length() - 1);
+
                 String[] parts = exp.split(" ");
                 if (parts.length < 3) {
                     System.out.println("Faltan argumentos para 'setq'");
                     return;
                 }
-                
+
                 String variable = parts[1];
+                @SuppressWarnings("unchecked")
                 T value = (T) parts[2];
-                
+
                 setq(variable, value);
             }
         } catch (IllegalArgumentException e) {

@@ -1,4 +1,3 @@
-
 public class Princ<T> implements InterfaceFactory<T> {
 
     private final SetQ<T> setQInstance;
@@ -7,12 +6,13 @@ public class Princ<T> implements InterfaceFactory<T> {
         this.setQInstance = setQInstance;
     }
 
-
     @Override
     public void execute(String exp) {
         Expression<T> expressionChecker = new Expression<>();
         try {
             if (expressionChecker.checkParen(exp)) {
+                exp = exp.substring(0, exp.length() - 1);
+
                 String[] parts = exp.split(" ");
                 if (parts.length < 2) {
                     System.out.println("Faltan argumentos para 'princ'");
