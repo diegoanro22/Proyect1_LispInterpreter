@@ -1,19 +1,21 @@
 import java.util.Scanner;
 
-public class Main{
+public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        Expression validate = new Expression();
+        Expression<String> validate = new Expression<>();
+        
 
         String expression = "";
 
-        while (!expression.equals("(exit)")){
+        while (!expression.equals("(exit)")) {
             System.out.print("> ");
             expression = input.nextLine();
-            try{
+            try {
                 validate.checkParen(expression);
-                
-            } catch (Exception e){
+                validate.checkExpression(expression);
+
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
 

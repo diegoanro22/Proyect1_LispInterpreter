@@ -1,17 +1,53 @@
-//Clase para operaciones aritmeticas
-
 import java.util.Stack;
 
-public class Operation {
-    
-    /**Metodo para evaluar la expresion postfix y pasar la cadena ingresada a dato de tipo double
+public class Operation<T> implements InterfaceFactory<T> {
+
+    // Método execute que recibe una expresión como argumento
+    @Override
+    public void execute(String exp) {
+        String postfixExp = convertToPostfix(exp);
+        double resultado = evaluatePostfixExpression(postfixExp);
+        System.out.println("El resultado de la expresión en Operation es: " + resultado);
+    }
+
+    /**Metodo convertir la entrada a portfix
      * @param exp
      * @return
      */
-    public double evaluatePostfixExpression(String exp){
+    public String convertToPostfix(String exp) {
+        exp = exp.substring(1, exp.length() - 1); 
+        StringBuilder postfixExp = new StringBuilder();
+        String[] tokens = exp.split(" ");
+        Stack<String> operatorStack = new Stack<>();
+
+        for (String token : tokens) {
+            if (signCheck(token)) {
+                // Verifica la jerarquia de operadores
+                while (!operatorStack.isEmpty() && hierarchySign(token) <= hierarchySign(operatorStack.peek())) {
+                    postfixExp.append(" ").append(operatorStack.pop());
+                }
+                operatorStack.push(token); 
+            } else {
+                postfixExp.append(" ").append(token); 
+            }
+        }
+
+        // Se envian los signos de operacion ya ordenados por jerarquia
+        while (!operatorStack.isEmpty()) {
+            postfixExp.append(" ").append(operatorStack.pop());
+        }
+
+        return postfixExp.toString().trim();
+    }
+
+    /**Metodo para evaluar la expresion
+     * @param exp
+     * @return
+     */
+    public double evaluatePostfixExpression(String exp) {
         Stack<Double> stack = new Stack<>();
         String[] expStr = exp.split(" ");
-        
+
         for (String token : expStr) {
             if (signCheck(token)) {
                 double operand2 = stack.pop();
@@ -22,11 +58,11 @@ public class Operation {
                 stack.push(Double.parseDouble(token));
             }
         }
-        
+
         return stack.pop();
     }
 
-    /**Metodo para verificar la existencia de algun signo de operacion
+    /**Metodo para verificar la existencia se signos
      * @param exp
      * @return
      */
@@ -34,8 +70,24 @@ public class Operation {
         return exp.matches("[+\\-*/]");
     }
 
-    
-    /**Metodo para aplicar las operaciones aritmeticas
+    /**Metodo para aplicar la jerarquia de operaciones
+     * @param operator
+     * @return
+     */
+    public int hierarchySign(String operator) {
+        switch (operator) {
+            case "+":
+            case "-":
+                return 1;
+            case "*":
+            case "/":
+                return 2;
+            default:
+                return 0;
+        }
+    }
+
+    /**Metodo para realizar las operaciones arithmeticas
      * @param a
      * @param b
      * @param operator
@@ -53,4 +105,3 @@ public class Operation {
         }
     }
 }
-
