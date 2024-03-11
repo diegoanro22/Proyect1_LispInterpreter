@@ -20,6 +20,8 @@ public class Factory<T> {
                 return new Quote<>();
                 case "atom":
                 return new Atom<>();
+            case "cond":
+                return new Condition<>();
             case "princ":
                 return new Princ<>(setQInstance);
             case "operation":
