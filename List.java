@@ -7,7 +7,7 @@ public class List<T> implements InterfaceFactory<T> {
         System.out.println(list);
     }
 
-    private java.util.List<T> listConversion(String exp) {
+    public java.util.List<T> listConversion(String exp) {
         String[] tokens = exp.substring(0, exp.length() - 1).split("\\s+");
         java.util.List<T> result = new ArrayList<>();
 
