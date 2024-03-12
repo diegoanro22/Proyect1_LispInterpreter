@@ -13,6 +13,7 @@ public class List<T> implements InterfaceFactory<T> {
 
         for (int i = 1; i < tokens.length; i++) {
             try {
+                @SuppressWarnings("unchecked")
                 T value = (T) tokens[i];
                 result.add(value);
             } catch (Exception e) {
