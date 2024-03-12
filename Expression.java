@@ -46,13 +46,14 @@ public class Expression<T> {
         String[] sign = {"+", "-", "*", "/"};
         boolean containsOperator = false; 
     
-        // Verificar si la expresión contiene algún operador
+        // Verificar si la expresión empieza con algún operador
         for (String oper : sign) {
-            if (exp.contains(oper)) {
+            if (exp.startsWith("(" + oper)) {
                 containsOperator = true;
                 break;
             }
         }
+    
     
         // Si se encontró un operador, enviar la expresión al factory
         if (containsOperator) {
