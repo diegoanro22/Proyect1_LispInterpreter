@@ -1,9 +1,4 @@
-import java.util.Scanner;
-
 public class Comparator<T> implements InterfaceFactory<T> {
-
-    private static Scanner scanner = new Scanner(System.in);
-
     @Override
     public void execute(String exp) {
         try {
