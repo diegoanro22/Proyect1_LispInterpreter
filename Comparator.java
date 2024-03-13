@@ -13,29 +13,31 @@ public class Comparator<T> implements InterfaceFactory<T> {
         }
     }
 
-    private void evaluateComparison(String expression) {
-        expression = expression.substring(12, expression.length() - 1).trim();
+    public boolean evaluateComparison(String expression) {
+        // expression = expression.substring(12, expression.length() - 1).trim();
         
-        String[] parts = expression.split("\\s+");
+        String[] parts = expression.split("");
+        boolean result=false;
         try {
             String operator = parts[0];
             int leftOperand = Integer.parseInt(parts[1]);
             int rightOperand = Integer.parseInt(parts[2]);
 
-            boolean result;
             if ("<".equals(operator)) {
                 result = leftOperand < rightOperand;
+                return result;
             } else if (">".equals(operator)) {
                 result = leftOperand > rightOperand;
+                return result;
             } else {
                 System.out.println("Operador no reconocido.");
-                return;
+                return result;
             }
-
-            System.out.println(result ? "T" : "NIL");
         } catch (NumberFormatException e) {
             System.out.println("Error al procesar los operandos numéricos.");
         }
+        System.out.println(result ? "T" : "NIL");
+        return result;
     }
     
 }
