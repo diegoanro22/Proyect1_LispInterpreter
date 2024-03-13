@@ -5,10 +5,6 @@ public class Expression<T> {
     Stack<String> stack = new Stack<>();
     Factory<T> stackFactory = new Factory<>();
 
-    /**Metodo para verificar que se inicie y finalize con parentecis la expresion
-     * @param exp
-     * @return
-     */
     public boolean checkParen(String exp) {
         stack.clear();
         String[] expStr = exp.split("");
@@ -32,36 +28,39 @@ public class Expression<T> {
                 }
             }
         }
-        if (!stack.isEmpty()) {
-            throw new IllegalArgumentException("Error de paréntesis, no se cerró signo");
-        } else {
-            return true;
-        }
+        return stack.isEmpty();
     }
 
-    /**Metodo para identificar palabras reservadas, numeros y signos
-     * @param exp
-     */
     public void checkExpression(String exp) {
+        // Verifica paréntesis primero
+        if (!checkParen(exp)) {
+            System.out.println("Error en la expresión: paréntesis incorrectos.");
+            return;
+        }
+
         String[] sign = {"+", "-", "*", "/"};
         boolean containsOperator = false; 
-    
-        // Verificar si la expresión contiene algún operador
+
         for (String oper : sign) {
             if (exp.contains(oper)) {
                 containsOperator = true;
                 break;
             }
         }
-    
-        // Si se encontró un operador, enviar la expresión al factory
+
         if (containsOperator) {
             InterfaceFactory<T> stackInterface = stackFactory.createStack("operation");
             stackInterface.execute(exp);
             return;
         }
-    
-        // Si no se encontró un operador, verificar palabras reservadas
+
+        // Añadir verificación para operadores de comparación
+        if (exp.matches("\\(\\s*([<>])\\s+\\w+\\s+\\w+\\s*\\)")) {
+            InterfaceFactory<T> comparator = stackFactory.createStack("comparator");
+            comparator.execute(exp);
+            return;
+        }
+
         String[] expStr = {"setq", "defun", "list", "equal", "quote", "atom", "princ", "comparator","cond"};
         for (String reservedWord : expStr) {
             if (exp.indexOf(reservedWord + " ", 1) == 1) {
@@ -70,7 +69,7 @@ public class Expression<T> {
                 return;
             }
         }
-    
+
         System.out.println("Comando no reconocido.");
     }
-}    
+}
