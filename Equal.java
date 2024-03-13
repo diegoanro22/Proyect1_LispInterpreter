@@ -25,8 +25,6 @@ public class Equal<T> implements InterfaceFactory<T> {
 
     public String equal(String entrada1, String entrada2) {
         try {
-            System.out.println(entrada1);
-            System.out.println(entrada2);
             if (entrada1.equals(entrada2)) {
                 return "T";
             }
