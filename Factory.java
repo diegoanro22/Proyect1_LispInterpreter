@@ -1,9 +1,11 @@
 
 public class Factory<T> {
     private final SetQ<T> setQInstance;
+    private final Defun<T> defunInstance;
 
     public Factory(){
         this.setQInstance = new SetQ<>();
+        this.defunInstance = new Defun<>();
     }
 
     public InterfaceFactory<T> createStack(String reservedWord) {
@@ -11,7 +13,7 @@ public class Factory<T> {
             case "setq":
                 return setQInstance;
             case "defun":
-                return new Defun<>();
+                return  defunInstance;
             case "list":
                 return new List<>();
             case "equal":
@@ -28,8 +30,14 @@ public class Factory<T> {
                 return new Operation<>();
             case "comparator":
                 return new Comparator<>();
+            case "callerFunction":
+                return new CallFunction<>(defunInstance);
             default:
                 throw new IllegalArgumentException("Palabra reservada no válida: " + reservedWord);
         }
+    }
+
+    public boolean functionDefine(String functionName) {
+        return defunInstance.isDefine(functionName);
     }
 }
