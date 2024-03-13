@@ -2,7 +2,6 @@ import java.util.Stack;
 
 public class Condition<T> implements InterfaceFactory<T>{
     Comparator<T> verificar = new Comparator<T>();
-
     @Override
     public void execute(String exp) {
         // Expression<T> expressionChecker=new Expression<>();
@@ -24,7 +23,6 @@ public class Condition<T> implements InterfaceFactory<T>{
                                     partes.append(ch);
                                     String partes2=partes.toString();
                                     cadenaFinal=partes2.replace(")","");
-                                    // System.out.println(cadenaFinal);
                                     
                             }
                             break;
@@ -35,8 +33,6 @@ public class Condition<T> implements InterfaceFactory<T>{
             String[] palabras = cadenaFinal.split(" ");
             String condicion = palabras[1];
             String resultado = palabras[2];
-            // System.out.println(condicion);
-            // System.out.println(resultado);
             System.out.println(cond(condicion,resultado));
 
     }
