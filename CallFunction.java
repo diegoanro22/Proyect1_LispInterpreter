@@ -15,7 +15,7 @@ public class CallFunction<T> implements InterfaceFactory<T> {
         String expression = evaluateExpression(exp);
         String[] partes = expression.split("\\s",2);
         String nameFunction = partes[0];
-        String[] parameters = partes.length > 1 ? partes[1].split(",") : new String[0];
+        String[] parameters = partes[1].split(",") ;
 
 
         Function funcion = getFunction(nameFunction);
@@ -30,8 +30,34 @@ public class CallFunction<T> implements InterfaceFactory<T> {
             arguments.put(funcion.getArguments().get(i), Integer.parseInt(parameters[i]));
         }
 
+        
         String result = funcion.execute(arguments);
-        operation.execute(result);
+
+        if (result.contains(nameFunction)){
+            int num = Integer.parseInt(result.split(" ")[1]);
+
+            String expressionfunction = result.substring(result.indexOf('-')).trim();
+            String[] partes2 = expressionfunction.split("\\s", 3);
+            double resultado = num;
+
+            while (num > 1 ){
+                String nuevaExpresion = partes2[0] + " " + num + " " + partes2[2];
+                resultado*= operation.execute2(nuevaExpresion);
+                num-=1;
+            }
+            System.out.println(resultado);
+
+        }
+        else{
+            char firstChar = result.charAt(0);
+            if (firstChar == '+' || firstChar == '-' || firstChar == '*' || firstChar == '/') {
+                operation.execute(result);
+            } else {
+                System.out.println("El resultado es: " + result);
+            }
+        }
+
+        
         
     }
 
