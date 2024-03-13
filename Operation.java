@@ -5,51 +5,37 @@ public class Operation<T> implements InterfaceFactory<T> {
     // Método execute que recibe una expresión como argumento
     @Override
     public void execute(String exp) {
-        String postfixExp = convertToPostfix(exp);
-        double resultado = evaluatePostfixExpression(postfixExp);
+        exp = evaluateExpression(exp);
+        double resultado = evaluatePrefixExpression(exp);
         System.out.println(resultado);
     }
 
-
-    public String convertToPostfix(String exp) {
-        exp = exp.substring(1, exp.length() - 1); 
-        StringBuilder postfixExp = new StringBuilder();
-        String[] tokens = exp.split(" ");
-        Stack<String> operatorStack = new Stack<>();
-
-        for (String token : tokens) {
-            if (signCheck(token)) {
-                while (!operatorStack.isEmpty() && hierarchySign(token) <= hierarchySign(operatorStack.peek())) {
-                    postfixExp.append(" ").append(operatorStack.pop());
-                }
-                operatorStack.push(token); 
-            } else {
-                postfixExp.append(" ").append(token); 
-            }
-        }
-
-        while (!operatorStack.isEmpty()) {
-            postfixExp.append(" ").append(operatorStack.pop());
-        }
-
-        return postfixExp.toString().trim();
+    public String evaluateExpression(String expresion){
+        expresion = expresion.replace("(", "").replace(")", "");
+        return expresion;
     }
 
-    public double evaluatePostfixExpression(String exp) {
+    public double evaluatePrefixExpression(String exp) {
         Stack<Double> stack = new Stack<>();
         String[] expStr = exp.split(" ");
-
-        for (String token : expStr) {
+    
+        // Recorre los tokens de derecha a izquierda
+        for (int i = expStr.length - 1; i >= 0; i--) {
+            String token = expStr[i];
             if (signCheck(token)) {
-                double operand2 = stack.pop();
+                // Si es un operador, saca los dos últimos números de la pila
                 double operand1 = stack.pop();
+                double operand2 = stack.pop();
+                // Realiza la operación correspondiente y coloca el resultado en la pila
                 double result = arithmeticOperation(operand1, operand2, token);
                 stack.push(result);
             } else {
+                // Si es un número, colócalo en la pila
                 stack.push(Double.parseDouble(token));
             }
         }
-
+    
+        // El resultado final estará en la cima de la pila
         return stack.pop();
     }
 

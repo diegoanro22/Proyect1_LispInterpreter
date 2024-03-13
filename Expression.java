@@ -39,6 +39,8 @@ public class Expression<T> {
         }
     }
 
+
+
     /**Metodo para identificar palabras reservadas, numeros y signos
      * @param exp
      */
@@ -54,14 +56,14 @@ public class Expression<T> {
             }
         }
     
-    
         // Si se encontró un operador, enviar la expresión al factory
         if (containsOperator) {
             InterfaceFactory<T> stackInterface = stackFactory.createStack("operation");
             stackInterface.execute(exp);
             return;
         }
-    
+
+        
         // Si no se encontró un operador, verificar palabras reservadas
         String[] expStr = {"setq", "defun", "list", "equal", "quote", "atom", "princ", "comparator","cond"};
         for (String reservedWord : expStr) {
@@ -71,7 +73,14 @@ public class Expression<T> {
                 return;
             }
         }
-    
-        System.out.println("Comando no reconocido.");
+        
+        // Si no encontró una palabra reservada, que verifique si es el nombre de una funcion
+        String functionName = exp.replaceAll("[()]", "").split(" ")[0];
+        if (stackFactory.functionDefine(functionName)) {
+            InterfaceFactory<T> stackInterface = stackFactory.createStack("callerFunction");
+            stackInterface.execute(exp);
+        } else {
+            System.out.println("Comando no reconocido o función no definida.");
+        }
     }
 }    
