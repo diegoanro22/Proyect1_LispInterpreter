@@ -1,10 +1,21 @@
 import java.util.Stack;
 
 public class Condition<T> implements InterfaceFactory<T>{
+
+    private final SetQ<T> setQInstance;
+
+    public Condition(SetQ<T> setQInstance) {
+        this.setQInstance = setQInstance;
+    }
+
     Comparator<T> verificar = new Comparator<T>();
     @Override
     public void execute(String exp) {
         // Expression<T> expressionChecker=new Expression<>();
+        String innerExpression = exp.substring(6, exp.length() - 1).trim();
+        if (setQInstance.variableValues.containsKey(innerExpression)) {
+            System.out.println("T");
+        }
         Stack<Character> stack = new Stack<>();
         String[] expStr = exp.split("");
         StringBuilder partes = new StringBuilder();
