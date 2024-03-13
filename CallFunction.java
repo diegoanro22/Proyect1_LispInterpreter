@@ -40,7 +40,29 @@ public class CallFunction<T> implements InterfaceFactory<T> {
         }
 
         String result = funcion.execute(arguments);
-        operation.execute(result);
+        if (result.contains(nameFunction)){
+            int num = Integer.parseInt(result.split(" ")[1]);
+
+            String expressionfunction = result.substring(result.indexOf('-')).trim();
+            String[] partes2 = expressionfunction.split("\\s", 3);
+            double resultado = num;
+
+            while (num > 1 ){
+                String nuevaExpresion = partes2[0] + " " + num + " " + partes2[2];
+                resultado*= operation.execute2(nuevaExpresion);
+                num-=1;
+            }
+            System.out.println(resultado);
+
+        }
+        else{
+            char firstChar = result.charAt(0);
+            if (firstChar == '+' || firstChar == '-' || firstChar == '*' || firstChar == '/') {
+                operation.execute(result);
+            } else {
+                System.out.println("El resultado es: " + result);
+            }
+        }
         
     }
 

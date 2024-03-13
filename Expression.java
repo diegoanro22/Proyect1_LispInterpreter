@@ -85,7 +85,15 @@ public class Expression<T> {
                 return;
             }
         }
+
+        // Si no encontró una palabra reservada, que verifique si es el nombre de una funcion
+        String functionName = exp.replaceAll("[()]", "").split(" ")[0];
+        if (stackFactory.functionDefine(functionName)) {
+            InterfaceFactory<T> stackInterface = stackFactory.createStack("callerFunction");
+            stackInterface.execute(exp);
+        } else {
+            System.out.println("Comando no reconocido o función no definida.");
+        }
     
-        System.out.println("Comando no reconocido.");
     }    
 }    
