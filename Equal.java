@@ -34,7 +34,7 @@ public class Equal<T> implements InterfaceFactory<T> {
                 return "Nil";
             }
         } catch (NumberFormatException e) {
-            System.out.println("Error al procesar los operandos numéricos.");
+            System.out.println("Error al procesar los valores");
         }
         return "Error";
     }
