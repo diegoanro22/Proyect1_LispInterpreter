@@ -23,7 +23,7 @@ public class Factory<T> {
                 case "atom":
                 return new Atom<>(setQInstance);
             case "cond":
-                return new Condition<>();
+                return new Condition<>(setQInstance);
             case "princ":
                 return new Princ<>(setQInstance);
             case "operation":
