@@ -96,4 +96,41 @@ public class LispTest {
 
     }
 
-}
+    //Test para la clase Defun
+    //Verifica que la expresion sea valida para definir una funcion
+    @Test
+    void testExecuteWithValidExpressionDefun() {
+        Defun<Integer> defun = new Defun<>();
+
+        String exp = "(defun double x ( * x 2 ))";
+        defun.execute(exp);
+
+        assertTrue(defun.isDefine("double"));
+    }
+
+    //Test para la clase Equal
+    //Verifica que la salida sea T
+    @Test
+    void testExecuteWithValidExpressionEqual() {
+        Equal<String> equal = new Equal<>();
+
+        String exp = "(equal 2 2)";
+        equal.execute(exp);
+    }
+
+    //Test para la clase CallFunction
+    //Verificar que se imprima el mensaje de error correspondiente
+    @Test
+    void testExecuteWithInvalidExpressionCallFunction() {
+        Defun<Integer> defun = new Defun<>();
+        defun.execute("(defun double x ( * x 2 ))");
+
+        CallFunction<Integer> callFunction = new CallFunction<>(defun);
+        String exp = "(double)";
+        
+        callFunction.execute(exp);
+
+        
+    }
+   
+} 
