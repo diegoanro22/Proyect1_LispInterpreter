@@ -67,4 +67,10 @@ public class Operation<T> implements InterfaceFactory<T> {
             default: throw new IllegalArgumentException("Operador desconocido: " + operator);
         }
     }
+
+    public double execute2(String exp) {
+        exp = evaluateExpression(exp);
+        double resultado = evaluatePrefixExpression(exp);
+        return resultado;
+    }
 }
