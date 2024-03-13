@@ -1,53 +1,44 @@
-import java.util.Stack;
-
-public class Condition<T> implements InterfaceFactory<T>{
+public class Condition<T> implements InterfaceFactory<T> {
     Comparator<T> verificar = new Comparator<T>();
+
     @Override
     public void execute(String exp) {
-        // Expression<T> expressionChecker=new Expression<>();
-        Stack<Character> stack = new Stack<>();
-        String[] expStr = exp.split("");
-        StringBuilder partes = new StringBuilder();
-        String cadenaFinal="";
-        try{
-            for (String character : expStr) {
-                for (char ch : character.toCharArray()){
-                    switch (ch) {
-                        case '(':
-                            stack.push(ch);
-                            break;
-                        case ')':
-                            stack.pop();
-                        default:
-                            if (String.valueOf(ch)!="("){
-                                    partes.append(ch);
-                                    String partes2=partes.toString();
-                                    cadenaFinal=partes2.replace(")","");
-                                    
-                            }
-                            break;
-                    }
-                    
+        exp = exp.trim();
+        if (!exp.startsWith("(cond") || !exp.endsWith(")")) {
+            System.out.println("Expresión mal formada.");
+            return;
         }
-    }
-            String[] palabras = cadenaFinal.split(" ");
-            String condicion = palabras[1];
-            String resultado = palabras[2];
-            System.out.println(cond(condicion,resultado));
 
-    }
-        catch(IllegalArgumentException e){
-            System.out.println(e.getMessage());
-        }
-    }
+        // Eliminamos el "(cond " y el último ")" para obtener solo la expresión de la condición.
+        String conditionExp = exp.substring(6, exp.length() - 1).trim();
 
-    
-    public String cond(String condicion,String resultado){
-        if (verificar.evaluateComparison(condicion)) {
-            return ("Es "+ resultado);
+        if (!conditionExp.startsWith("(") || !conditionExp.endsWith(")")) {
+            System.out.println("Expresión mal formada.");
+            return;
         }
-        else{
-            return "Es Falso";
+
+        // Eliminamos los paréntesis que envuelven la condición.
+        conditionExp = conditionExp.substring(1, conditionExp.length() - 1).trim();
+
+        // Dividimos la condición en sus partes.
+        String[] parts = conditionExp.split("\\s+");
+
+        if (parts.length != 3) {
+            System.out.println("Expresión mal formada.");
+            return;
         }
-}
+
+        String operator = parts[0];
+        String leftOperand = parts[1];
+        String rightOperand = parts[2];
+
+        // Llamamos al método evaluateComparison de Comparator.
+        try {
+            boolean result = verificar.evaluateComparison(operator, leftOperand, rightOperand);
+            String output = result ? "Es Verdadero" : "Es Falso";
+            System.out.println(output);
+        } catch (Exception e) {
+            System.out.println("Error al procesar la expresión: " + e.toString());
+        }
+    }
 }

@@ -1,11 +1,17 @@
+/*La clase {Princ} implementa la interfaz para imprimir el valor de una variable especificada en una expresión. 
+Utiliza una instancia de {SetQ} para buscar el valor de la variable e imprimirlo.*/
 public class Princ<T> implements InterfaceFactory<T> {
 
     private final SetQ<T> setQInstance;
 
+    /*Construye una instancia de {Princ} con una referencia a una instancia de {SetQ}.
+    Esto permite a {Princ} acceder a los valores de las variables almacenadas en {SetQ}.*/
     public Princ(SetQ<T> setQInstance) {
         this.setQInstance = setQInstance;
     }
 
+    /*Ejecuta la operación de impresión para la variable especificada en la expresión. Si la variable
+    existe en {SetQ}, imprime su valor; de lo contrario, notifica que la variable no fue encontrada.*/
     @Override
     public void execute(String exp) {
         Expression<T> expressionChecker = new Expression<>();

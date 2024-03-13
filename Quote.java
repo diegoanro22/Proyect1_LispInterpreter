@@ -1,5 +1,8 @@
+/*La clase {Quote} implementa la interfaz para procesar y mostrar expresiones literales, 
+tal como se ingresan, sin realizar ninguna evaluación o transformación sobre ellas.*/
 public class Quote<T> implements InterfaceFactory<T> {
 
+    //Ejecuta la operación de "quote", extrayendo y mostrando la expresión literal.
     @Override
     public void execute(String exp) {
         Expression<T> expressionChecker = new Expression<>();

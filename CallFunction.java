@@ -1,15 +1,24 @@
 import java.util.HashMap;
 import java.util.Map;
 
+/* La clase {CallFunction} es responsable de ejecutar funciones definidas por el usuario a través de la instancia 
+{Defun}. Esta ejecución se realiza interpretando una expresión y llamando a la función correspondiente 
+con los argumentos proporcionados.*/
+
 public class CallFunction<T> implements InterfaceFactory<T> { 
     
+    // Instancia de {Defun} utilizada para acceder a las funciones definidas por el usuario.
     private final Defun<T> defunInstance;
+    // Instancia de {Operation} utilizada para realizar operaciones.
     public Operation<T> operation = new Operation<>();
 
+    /*Construye una instancia de {CallFunction} asociada con una instancia específica de {Defun}.
+    La instancia que contiene las definiciones de las funciones.*/
     public CallFunction(Defun<T> defunInstance) {
         this.defunInstance = defunInstance;
     }
 
+    //Interpreta y ejecuta una expresión dada como una llamada a función definida por el usuario.
     @Override
     public void execute(String exp) {
         String expression = evaluateExpression(exp);
@@ -35,11 +44,13 @@ public class CallFunction<T> implements InterfaceFactory<T> {
         
     }
 
+    //Evalúa y normaliza una expresión eliminando paréntesis.
     public String evaluateExpression(String expresion){
         expresion = expresion.replace("(", "").replace(")", "");
         return expresion;
     }
 
+    //Obtiene una función por nombre a partir de las funciones definidas en {Defun}.
     public Function getFunction(String nameFunction){
         return defunInstance.functions.get(nameFunction);
     }

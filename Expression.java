@@ -1,5 +1,9 @@
 import java.util.Stack;
 
+/*
+ * La clase {Expression} se encarga de analizar expresiones para verificar su correcta estructuración y 
+ * clasificarlas según su tipo. Utiliza una pila para manejar la verificación de paréntesis y 
+ * delega el procesamiento de la expresión a la clase {Factory}.*/
 public class Expression<T> {
 
     Stack<String> stack = new Stack<>();
@@ -46,9 +50,11 @@ public class Expression<T> {
      */
     public void checkExpression(String exp) {
         String[] sign = {"+", "-", "*", "/"};
-        boolean containsOperator = false; 
+        // El patrón de comparación ajustado para detectar expresiones sin la palabra "comparator"
+        String comparatorPattern = "^\\(\\s*(<|>)\\s+\\S+\\s+\\S+\\s*\\)$";
+        boolean containsOperator = false;
     
-        // Verificar si la expresión empieza con algún operador
+        // Verificar si la expresión empieza con algún operador de signo
         for (String oper : sign) {
             if (exp.startsWith("(" + oper)) {
                 containsOperator = true;
@@ -56,31 +62,30 @@ public class Expression<T> {
             }
         }
     
-        // Si se encontró un operador, enviar la expresión al factory
+        // Si se encontró un operador, enviar la expresión al factory para operaciones
         if (containsOperator) {
             InterfaceFactory<T> stackInterface = stackFactory.createStack("operation");
             stackInterface.execute(exp);
             return;
         }
-
-        
-        // Si no se encontró un operador, verificar palabras reservadas
-        String[] expStr = {"setq", "defun", "list", "equal", "quote", "atom", "princ", "comparator","cond"};
-        for (String reservedWord : expStr) {
-            if (exp.indexOf(reservedWord + " ", 1) == 1) {
-                InterfaceFactory<T> stackInterface = stackFactory.createStack(reservedWord);
+    
+        // Verifica si la expresión concuerda con el patrón de un comparador
+        if (exp.matches(comparatorPattern)) {
+            InterfaceFactory<T> stackInterface = stackFactory.createStack("comparator");
+            stackInterface.execute(exp);
+            return;
+        }
+    
+        // Lógica para manejar palabras reservadas o expresiones no reconocidas
+        String[] reservedWords = {"setq", "defun", "list", "equal", "quote", "atom", "princ", "cond"};
+        for (String word : reservedWords) {
+            if (exp.indexOf(word + " ", 1) == 1) {
+                InterfaceFactory<T> stackInterface = stackFactory.createStack(word);
                 stackInterface.execute(exp);
                 return;
             }
         }
-        
-        // Si no encontró una palabra reservada, que verifique si es el nombre de una funcion
-        String functionName = exp.replaceAll("[()]", "").split(" ")[0];
-        if (stackFactory.functionDefine(functionName)) {
-            InterfaceFactory<T> stackInterface = stackFactory.createStack("callerFunction");
-            stackInterface.execute(exp);
-        } else {
-            System.out.println("Comando no reconocido o función no definida.");
-        }
-    }
+    
+        System.out.println("Comando no reconocido.");
+    }    
 }    

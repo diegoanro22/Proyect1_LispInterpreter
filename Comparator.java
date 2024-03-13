@@ -2,9 +2,19 @@ public class Comparator<T> implements InterfaceFactory<T> {
     @Override
     public void execute(String exp) {
         try {
-            String expression = exp.trim();
-            if (expression.matches("\\(comparator\\s*(<|>)\\s*\\d+\\s*\\d+\\)")) {
-                evaluateComparison(expression);
+            // Elimina espacios extra y los paréntesis al inicio y al final.
+            String expression = exp.trim().replaceAll("^\\(|\\)$", "");
+            // Divide la expresión en sus componentes: operador, operando izquierdo, operando derecho.
+            String[] parts = expression.split("\\s+");
+
+            if (parts.length == 3) {
+                String operator = parts[0];
+                String leftOperand = parts[1];
+                String rightOperand = parts[2];
+
+                // Llama a evaluateComparison con los componentes extraídos.
+                boolean result = evaluateComparison(operator, leftOperand, rightOperand);
+                System.out.println(result ? "T" : "NIL");
             } else {
                 System.out.println("Expresión no reconocida o mal formada.");
             }
@@ -13,31 +23,29 @@ public class Comparator<T> implements InterfaceFactory<T> {
         }
     }
 
-    public boolean evaluateComparison(String expression) {
-        // expression = expression.substring(12, expression.length() - 1).trim();
-        
-        String[] parts = expression.split("");
-        boolean result=false;
+    public boolean evaluateComparison(String operator, String leftOperand, String rightOperand) {
         try {
-            String operator = parts[0];
-            int leftOperand = Integer.parseInt(parts[1]);
-            int rightOperand = Integer.parseInt(parts[2]);
-
-            if ("<".equals(operator)) {
-                result = leftOperand < rightOperand;
-                return result;
-            } else if (">".equals(operator)) {
-                result = leftOperand > rightOperand;
-                return result;
-            } else {
-                System.out.println("Operador no reconocido.");
-                return result;
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Error al procesar los operandos numéricos.");
-        }
-        System.out.println(result ? "T" : "NIL");
-        return result;
-    }
+            // Intenta convertir los operandos a números para una comparación numérica.
+            int leftInt = Integer.parseInt(leftOperand);
+            int rightInt = Integer.parseInt(rightOperand);
     
+            if ("<".equals(operator)) {
+                return leftInt < rightInt;
+            } else if (">".equals(operator)) {
+                return leftInt > rightInt;
+            } 
+        } catch (NumberFormatException e) {
+            // Invertir la lógica de comparación de cadenas para cumplir con "A" > "B" = T
+            int comparisonResult = leftOperand.compareTo(rightOperand);
+            if ("<".equals(operator)) {
+                // Invierte el resultado esperado para '<'
+                return comparisonResult > 0;
+            } else if (">".equals(operator)) {
+                // Invierte el resultado esperado para '>'
+                return comparisonResult < 0;
+            } 
+        }
+        System.out.println("Operador no reconocido.");
+        return false;
+    }    
 }

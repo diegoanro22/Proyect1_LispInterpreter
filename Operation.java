@@ -1,5 +1,7 @@
 import java.util.Stack;
 
+/*La clase {Operation} implementa la interfaz para evaluar expresiones aritméticas en notación prefija.
+ Utiliza una pila para almacenar y operar con los números y operadores encontrados en la expresión. */
 public class Operation<T> implements InterfaceFactory<T> {
 
     // Método execute que recibe una expresión como argumento
@@ -39,10 +41,12 @@ public class Operation<T> implements InterfaceFactory<T> {
         return stack.pop();
     }
 
+    //Verifica si el token dado es un operador aritmético.
     public boolean signCheck(String exp) {
         return exp.matches("[+\\-*/]");
     }
 
+    //Devuelve la jerarquía de los operadores aritméticos para su uso en la evaluación.
     public int hierarchySign(String operator) {
         switch (operator) {
             case "+":
@@ -56,6 +60,7 @@ public class Operation<T> implements InterfaceFactory<T> {
         }
     }
 
+    //Realiza la operación aritmética especificada entre dos números.
     public double arithmeticOperation(double a, double b, String operator) {
         switch (operator) {
             case "+": return a + b;
